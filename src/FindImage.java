@@ -8,7 +8,7 @@ public class FindImage {
 
 	public static void main(String[] args) {
 		try {
-			BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Find-the-logo/src/img/Superman.png"));
+			BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png"));
 			boolean isOnScreen = isOnScreen(image);
 			System.out.print(isOnScreen);
 		} catch (IOException e) {
@@ -17,7 +17,7 @@ public class FindImage {
 	}
 
 	private static boolean isOnScreen(BufferedImage bi) throws IOException {
-		BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Find-the-logo/src/img/out/image6_4.png"));
+		BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Projeto-PCD/src/img/out/image1_1.png"));
 
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
