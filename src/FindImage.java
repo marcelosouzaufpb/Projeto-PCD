@@ -27,6 +27,8 @@ public class FindImage {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
 				int c = 0;
+				int d = 0;
+				int e = 0;
 				boolean invalid = false;
 				int k = x, l = y;
 				for (int a = 0; a < bi.getWidth(); a++) {
@@ -37,9 +39,14 @@ public class FindImage {
 							break;
 						} else {
 							l++;
+							c++;
 						}
 
-						
+						if (c == 1) {
+							d = k;
+							e = l;
+						}
+
 					}
 					if (invalid) {
 						break;
@@ -49,7 +56,7 @@ public class FindImage {
 				}
 
 				if (!invalid) {
-					
+					drawRectangle(image, d, e, bi.getWidth(), bi.getHeight());
 					save(image);
 					return true;
 				}
