@@ -13,7 +13,7 @@ public class FindImage {
 
 	public static void main(String[] args) {
 		try {
-			BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png"));
+			BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/in/Superman.png"));
 			boolean isOnScreen = isOnImagem(image);
 			System.out.print(isOnScreen);
 		} catch (IOException e) {
@@ -27,7 +27,7 @@ public class FindImage {
 	 * rgb, returning true or false, for existence.
 	 */
 	private static boolean isOnImagem(BufferedImage bi) throws IOException {
-		BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Projeto-PCD/src/img/out/image6_3.png"));
+		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_1.png"));
 
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
@@ -52,16 +52,20 @@ public class FindImage {
 					}
 					if (invalid) {
 						break;
-					} else {
+					} else if (!invalid) {
+						drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
+						save(image);
+						
+					}else {
 						k++;
 					}
 				}
 
-				if (!invalid) {
-					// drawRectangle(image, d, e, bi.getWidth(), bi.getHeight());
+				/*if (!invalid) {
+					drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
 					save(image);
 					return true;
-				}
+				}*/
 			}
 		}
 		return false; // If no image is found
@@ -101,7 +105,7 @@ public class FindImage {
 
 		BufferedImage bImageFromConvert = ImageIO.read(in);
 
-		ImageIO.write(bImageFromConvert, "png", new File("C:\\Users\\marce\\git\\Projeto-PCD\\src\\img\\out\\out.png"));
+		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out1.png"));
 
 	}
 
