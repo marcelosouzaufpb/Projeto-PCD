@@ -60,7 +60,7 @@ public class FindImage {
 						k++;
 					}
 				}
-
+				//function below is unnecessary was searching the other superman images
 				/*if (!invalid) {
 					drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
 					save(image);
