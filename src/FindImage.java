@@ -27,8 +27,9 @@ public class FindImage {
 	 * rgb, returning true or false, for existence.
 	 */
 	private static boolean isOnImagem(BufferedImage bi) throws IOException {
-		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_1.png"));
-
+		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_2.png"));
+		//local variable is incorporated
+		boolean vixi= false;
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
 				/*
@@ -55,10 +56,13 @@ public class FindImage {
 					} else if (!invalid) {
 						drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
 						save(image);
+						//a local variable is incorporated to return a boolean as any image is drawn.
+						vixi= true;
 						
 					}else {
 						k++;
 					}
+				
 				}
 				//function below is unnecessary was searching the other superman images
 				/*if (!invalid) {
@@ -67,8 +71,10 @@ public class FindImage {
 					return true;
 				}*/
 			}
+			
 		}
-		return false; // If no image is found
+		return vixi;
+		 // If no image is found
 	}
 
 	/*
@@ -105,7 +111,7 @@ public class FindImage {
 
 		BufferedImage bImageFromConvert = ImageIO.read(in);
 
-		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out1.png"));
+		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out10.png"));
 
 	}
 
