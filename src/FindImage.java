@@ -14,21 +14,26 @@ public class FindImage {
 
 	public static void main(String[] args) {
 		String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
-		String img = "C:/Users/marce/git/Projeto-PCD/src/img/out/image2_3.png";
-		String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/out/out.png";
-
-		fileChooser();
-
-		File selectedFile = fileChooser();
-
-		for (File file : selectedFile.listFiles()) {
-			System.out.println(file.getName());
-		}
+		String img = "";
+		String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
 
 		try {
-			BufferedImage find = ImageIO.read(new File(findImage));
-			BufferedImage image = ImageIO.read(new File(img));
-			isOnImagem(find, image, caminho);
+			File selectedFile = fileChooser();
+
+			for (File file : selectedFile.listFiles()) {
+				System.out.println(file.getName());
+
+				img = selectedFile + "/" + file.getName();
+				System.out.println(img);
+
+				BufferedImage find = ImageIO.read(new File(findImage));
+				BufferedImage image = ImageIO.read(new File(img));
+				String temp = caminho;
+				caminho += file.getName();
+				isOnImagem(find, image, caminho);
+				caminho = temp;
+				
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
