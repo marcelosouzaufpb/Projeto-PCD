@@ -8,15 +8,27 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 public class FindImage {
 
 	public static void main(String[] args) {
+		String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
+		String img = "C:/Users/marce/git/Projeto-PCD/src/img/out/image2_3.png";
+		String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/out/out.png";
+
+		fileChooser();
+
+		File selectedFile = fileChooser();
+
+		for (File file : selectedFile.listFiles()) {
+			System.out.println(file.getName());
+		}
+
 		try {
-			BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/in/Superman.png"));
-			//BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png"));
-			boolean isOnScreen = isOnImagem(image);
-			System.out.print(isOnScreen);
+			BufferedImage find = ImageIO.read(new File(findImage));
+			BufferedImage image = ImageIO.read(new File(img));
+			isOnImagem(find, image, caminho);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -27,59 +39,35 @@ public class FindImage {
 	 * determined image, checking if there is one image inside the other, all behind
 	 * rgb, returning true or false, for existence.
 	 */
-	private static boolean isOnImagem(BufferedImage bi) throws IOException {
-
-		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_2.png"));
-		//local variable is incorporated
-		boolean vixi= false;
-
-		
-
+	private static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
-				/*
-				 * int c = 0; int d = 0; int e = 0;
-				 */
+
 				boolean invalid = false;
 				int k = x, l = y;
-				for (int a = 0; a < bi.getWidth(); a++) {
+				for (int a = 0; a < find.getWidth(); a++) {
 					l = y;
-					for (int b = 0; b < bi.getHeight(); b++) {
-						if (bi.getRGB(a, b) != image.getRGB(k, l)) {
+					for (int b = 0; b < find.getHeight(); b++) {
+						if (find.getRGB(a, b) != image.getRGB(k, l)) {
 							invalid = true;
 							break;
 						} else {
 							l++;
-							// c++;
 						}
-						/*
-						 * if (c == 1) { d = k; e = l; }
-						 */
 					}
 					if (invalid) {
 						break;
 					} else if (!invalid) {
-						drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
-						save(image);
-						//a local variable is incorporated to return a boolean as any image is drawn.
-						vixi= true;
-						
-					}else {
+						drawRectangle(image, x, y, find.getWidth(), find.getHeight());
+						save(image, caminho);
+					} else {
 						k++;
 					}
-				
 				}
-				//function below is unnecessary was searching the other superman images
-				/*if (!invalid) {
-					drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
-					save(image);
-					return true;
-				}*/
 			}
-			
+
 		}
-		return vixi;
-		 // If no image is found
+		System.out.println("Finish");
 	}
 
 	/*
@@ -101,7 +89,7 @@ public class FindImage {
 	 * Save function receives an image, which is converted to byte, to be saved in a
 	 * default folder
 	 */
-	public static void save(BufferedImage image) throws IOException {
+	public static void save(BufferedImage image, String caminho) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 		ImageIO.write(image, "png", baos);
@@ -116,12 +104,25 @@ public class FindImage {
 
 		BufferedImage bImageFromConvert = ImageIO.read(in);
 
-		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out15.png"));
+		ImageIO.write(bImageFromConvert, "png", new File(caminho));
 
+	}
 
-		
-		//ImageIO.write(bImageFromConvert, "png", new File("C:\\Users\\marce\\git\\Projeto-PCD\\src\\img\\out\\out.png"));
+	private static File fileChooser() {
+		JFileChooser jfc = new JFileChooser(".");
 
+		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		int returnValue = jfc.showOpenDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+			File selectedFile = jfc.getSelectedFile();
+			System.out.println(selectedFile.getAbsolutePath());
+			return selectedFile;
+
+		}
+		return null;
 	}
 
 }
