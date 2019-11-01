@@ -108,6 +108,9 @@ public class FindImage {
 
 	}
 
+	/*
+	 * This function picks a folder and returns a list of all files in it.
+	 */
 	private static File fileChooser() {
 		JFileChooser jfc = new JFileChooser(".");
 
