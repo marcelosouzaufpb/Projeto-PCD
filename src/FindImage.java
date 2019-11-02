@@ -29,40 +29,48 @@ public class FindImage {
 	 */
 	private static boolean isOnImagem(BufferedImage bi) throws IOException {
 
-		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_2.png"));
+		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_4.png"));
 		//local variable is incorporated
-		boolean vixi= false;
-
 		
+
+		boolean invalid = false;
+		int vixi= 0;
 
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
 				/*
 				 * int c = 0; int d = 0; int e = 0;
 				 */
-				boolean invalid = false;
+				
 				int k = x, l = y;
+				
 				for (int a = 0; a < bi.getWidth(); a++) {
 					l = y;
 					for (int b = 0; b < bi.getHeight(); b++) {
 						if (bi.getRGB(a, b) != image.getRGB(k, l)) {
-							invalid = true;
+							
 							break;
+							
 						} else {
+							
 							l++;
+							vixi+=1;
 							// c++;
+							
 						}
 						/*
 						 * if (c == 1) { d = k; e = l; }
 						 */
 					}
-					if (invalid) {
+					if (vixi!=0 ) {
+						
 						break;
-					} else if (!invalid) {
+					} else if (vixi>=0) {
 						drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
 						save(image);
+						invalid= true;
 						//a local variable is incorporated to return a boolean as any image is drawn.
-						vixi= true;
+						
 						
 					}else {
 						k++;
@@ -77,9 +85,11 @@ public class FindImage {
 				}*/
 			}
 			
+		
+		
 		}
-		return vixi;
-		 // If no image is found
+			return invalid;
+		
 	}
 
 	/*
@@ -116,7 +126,7 @@ public class FindImage {
 
 		BufferedImage bImageFromConvert = ImageIO.read(in);
 
-		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out15.png"));
+		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out17.png"));
 
 
 		
