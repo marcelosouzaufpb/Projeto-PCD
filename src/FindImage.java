@@ -13,11 +13,9 @@ import javax.swing.JFileChooser;
 public class FindImage {
 
 	public static void main(String[] args) {
-		//String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
-		String findImage = "/Users/ivocosta/git/Projeto-PCD/src/img/in/Superman.png";
+		String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
 		String img = "";
-		//String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
-		String caminho = "/Users/ivocosta/git/Projeto-PCD/src/img/modified/";
+		String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
 
 		try {
 			File selectedFile = fileChooser();
@@ -46,7 +44,6 @@ public class FindImage {
 	 * determined image, checking if there is one image inside the other, all behind
 	 * rgb, returning true or false, for existence.
 	 */
-
 	private static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
@@ -59,23 +56,23 @@ public class FindImage {
 						if (find.getRGB(a, b) != image.getRGB(k, l)) {
 							invalid = true;
 							break;
-
 						} else {
-
 							l++;
 						}
 					}
-
-				}
-				if (!invalid) {
-					drawRectangle(image, x, y, find.getWidth(), find.getHeight());
-					save(image, caminho);
-				} else {
-					k++;
+					if (invalid) {
+						break;
+					} else if (!invalid) {
+						drawRectangle(image, x, y, find.getWidth(), find.getHeight());
+						save(image, caminho);
+					} else {
+						k++;
+					}
 				}
 			}
-		}
 
+		}
+		System.out.println("Finish");
 	}
 
 	/*
@@ -112,9 +109,6 @@ public class FindImage {
 
 		BufferedImage bImageFromConvert = ImageIO.read(in);
 
-		// ImageIO.write(bImageFromConvert, "png", new
-		// File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out17.png"));
-
 		ImageIO.write(bImageFromConvert, "png", new File(caminho));
 
 	}
@@ -138,4 +132,5 @@ public class FindImage {
 		}
 		return null;
 	}
+
 }
