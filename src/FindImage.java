@@ -14,8 +14,10 @@ public class FindImage {
 
 	public static void main(String[] args) {
 		String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
+		//String findImage = "/Users/ivocosta/git/Projeto-PCD/bin/img/in";
 		String img = "";
 		String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
+		//String caminho = "/Users/ivocosta/git/Projeto-PCD/bin/img/modified";
 
 		try {
 			File selectedFile = fileChooser();
@@ -111,6 +113,7 @@ public class FindImage {
 		BufferedImage bImageFromConvert = ImageIO.read(in);
 
 		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out17.png"));
+		//ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out17.png"));
 
 		ImageIO.write(bImageFromConvert, "png", new File(caminho));
 
