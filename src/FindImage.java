@@ -8,15 +8,32 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 public class FindImage {
 
 	public static void main(String[] args) {
+		String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
+		String img = "";
+		String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
+
 		try {
-			BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/in/Superman.png"));
-			//BufferedImage image = ImageIO.read(new File("C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png"));
-			boolean isOnScreen = isOnImagem(image);
-			System.out.print(isOnScreen);
+			File selectedFile = fileChooser();
+
+			for (File file : selectedFile.listFiles()) {
+				System.out.println(file.getName());
+
+				img = selectedFile + "/" + file.getName();
+				System.out.println(img);
+
+				BufferedImage find = ImageIO.read(new File(findImage));
+				BufferedImage image = ImageIO.read(new File(img));
+				String temp = caminho;
+				caminho += file.getName();
+				isOnImagem(find, image, caminho);
+				caminho = temp;
+
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -27,69 +44,36 @@ public class FindImage {
 	 * determined image, checking if there is one image inside the other, all behind
 	 * rgb, returning true or false, for existence.
 	 */
-	private static boolean isOnImagem(BufferedImage bi) throws IOException {
 
-		BufferedImage image = ImageIO.read(new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/image6_4.png"));
-		//local variable is incorporated
-		
-
-		boolean invalid = false;
-		int vixi= 0;
-
+	private static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
-				/*
-				 * int c = 0; int d = 0; int e = 0;
-				 */
-				
+
+				boolean invalid = false;
 				int k = x, l = y;
-				
-				for (int a = 0; a < bi.getWidth(); a++) {
+				for (int a = 0; a < find.getWidth(); a++) {
 					l = y;
-					for (int b = 0; b < bi.getHeight(); b++) {
-						if (bi.getRGB(a, b) != image.getRGB(k, l)) {
-							
+					for (int b = 0; b < find.getHeight(); b++) {
+						if (find.getRGB(a, b) != image.getRGB(k, l)) {
+							invalid = true;
 							break;
-							
+
 						} else {
-							
+
 							l++;
-							vixi+=1;
-							// c++;
-							
 						}
-						/*
-						 * if (c == 1) { d = k; e = l; }
-						 */
 					}
-					if (vixi!=0 ) {
-						
-						break;
-					} else if (vixi>=0) {
-						drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
-						save(image);
-						invalid= true;
-						//a local variable is incorporated to return a boolean as any image is drawn.
-						
-						
-					}else {
-						k++;
-					}
-				
+
 				}
-				//function below is unnecessary was searching the other superman images
-				/*if (!invalid) {
-					drawRectangle(image, x, y, bi.getWidth(), bi.getHeight());
-					save(image);
-					return true;
-				}*/
+				if (!invalid) {
+					drawRectangle(image, x, y, find.getWidth(), find.getHeight());
+					save(image, caminho);
+				} else {
+					k++;
+				}
 			}
-			
-		
-		
 		}
-			return invalid;
-		
+
 	}
 
 	/*
@@ -111,7 +95,7 @@ public class FindImage {
 	 * Save function receives an image, which is converted to byte, to be saved in a
 	 * default folder
 	 */
-	public static void save(BufferedImage image) throws IOException {
+	public static void save(BufferedImage image, String caminho) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 		ImageIO.write(image, "png", baos);
@@ -128,10 +112,27 @@ public class FindImage {
 
 		ImageIO.write(bImageFromConvert, "png", new File("/Users/ivocosta/git/Projeto-PCD/bin/img/out/out17.png"));
 
-
-		
-		//ImageIO.write(bImageFromConvert, "png", new File("C:\\Users\\marce\\git\\Projeto-PCD\\src\\img\\out\\out.png"));
+		ImageIO.write(bImageFromConvert, "png", new File(caminho));
 
 	}
 
+	/*
+	 * This function picks a folder and returns a list of all files in it.
+	 */
+	private static File fileChooser() {
+		JFileChooser jfc = new JFileChooser(".");
+
+		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		int returnValue = jfc.showOpenDialog(null);
+
+		if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+			File selectedFile = jfc.getSelectedFile();
+			System.out.println(selectedFile.getAbsolutePath());
+			return selectedFile;
+
+		}
+		return null;
+	}
 }
