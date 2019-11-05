@@ -12,12 +12,16 @@ import javax.swing.JFileChooser;
 
 public class FindImage {
 
+<<<<<<< HEAD
 	public static void main(String[] args) {
 		//String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
 		String img = "";
 		String findImage ="/Users/ivocosta/git/Projeto-PCD/src/img/in/Superman.png";
 		//String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
 		String caminho ="/Users/ivocosta/git/Projeto-PCD/src/img/modified/";
+=======
+	/*public static void main(String[] args) {
+>>>>>>> origin/master
 
 		try {
 			File selectedFile = fileChooser();
@@ -40,7 +44,7 @@ public class FindImage {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	/*
 	 * The image function receives an image that will be compared with an already
 	 * determined image, checking if there is one image inside the other, all behind
@@ -118,7 +122,7 @@ public class FindImage {
 	/*
 	 * This function picks a folder and returns a list of all files in it.
 	 */
-	private static File fileChooser() {
+	static File fileChooser() {
 		JFileChooser jfc = new JFileChooser(".");
 
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -128,7 +132,6 @@ public class FindImage {
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 
 			File selectedFile = jfc.getSelectedFile();
-			System.out.println(selectedFile.getAbsolutePath());
 			return selectedFile;
 
 		}
