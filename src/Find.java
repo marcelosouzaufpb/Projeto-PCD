@@ -3,6 +3,8 @@ import java.io.File;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class Find extends javax.swing.JFrame {
 	public FindImage fm = new FindImage();
@@ -40,19 +42,6 @@ public class Find extends javax.swing.JFrame {
 		jScrollPane3 = new javax.swing.JScrollPane();
 		listaDePesquisa = new javax.swing.JList<>();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-		listaDeImagem.addAncestorListener(new javax.swing.event.AncestorListener() {
-			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-			}
-
-			public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-				listaDeImagemAncestorAdded(evt);
-			}
-
-			public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-			}
-		});
 		jScrollPane1.setViewportView(listaDeImagem);
 
 		jButton1.setText("Procurar");
@@ -153,15 +142,19 @@ public class Find extends javax.swing.JFrame {
 		addListImage();
 	}
 
-	private void listaDeImagemAncestorAdded(javax.swing.event.AncestorEvent evt) {
-
-	}
-
 	private void show_imageAncestorAdded(javax.swing.event.AncestorEvent evt) {
-		int selecionado = listaDeImagem.getAnchorSelectionIndex();
-		//ImageIcon m = new ImageIcon("C:\\Users\\marce\\git\\Projeto-PCD\\src\\img\\out\\" + imagem.toString());
-		System.out.print(selecionado);
-		//show_image.setIcon(m);
+		listaDeImagem.addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					String selectedValue = listaDeImagem.getSelectedValue();
+					ImageIcon m = new ImageIcon("C:\\Users\\marce\\git\\Projeto-PCD\\src\\img\\out\\" + selectedValue);
+					show_image.setIcon(m);
+				}
+
+			}
+		});
+
 	}
 
 	public static void main(String args[]) {
