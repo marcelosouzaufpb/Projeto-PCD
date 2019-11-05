@@ -11,31 +11,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 public class FindImage {
-	/*static String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
-	static String img = "";
-	static String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
-
-	public static void main(String[] args) {
-
-		try {
-			File selectedFile = fileChooser();
-
-			for (File file : selectedFile.listFiles()) {
-				System.out.println(file.getName());
-
-
-				BufferedImage find = ImageIO.read(new File(findImage));
-				BufferedImage image = ImageIO.read(new File(img));
-				String temp = caminho;
-				caminho += file.getName();
-				isOnImagem(find, image, caminho);
-				caminho = temp;
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	/*
 	 * The image function receives an image that will be compared with an already
