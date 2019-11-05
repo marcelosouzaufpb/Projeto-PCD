@@ -1,30 +1,57 @@
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class Find extends javax.swing.JFrame {
-	public FindImage fm = new FindImage();
+	private FindImage fm = new FindImage();
 	private DefaultListModel<String> dlm = new DefaultListModel<String>();
-	String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
-	String img = "";
-	String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
+	private File selectedFile;
+	private File selectedImg;
+	private String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
+	private File f = new File("C:/Users/marce/git/Projeto-PCD/src/img/modified/");
 
 	public Find() {
 		initComponents();
 	}
 
-	public void addListImage() {
-		File selectedFile = fm.fileChooser();
+	public void addCaminhoImg() {
+		selectedImg = fm.fileChooser();
+		jTextField2.setText(selectedImg.toString() + "/Superman.png");
+	}
+
+	public void addCaminho() {
+		selectedFile = fm.fileChooser();
 		jTextField1.setText(selectedFile.toString());
+	}
+
+	public void addListImage() throws IOException {
+		String img = "";
 		for (File file : selectedFile.listFiles()) {
-			dlm.addElement(file.getName());
+			img = selectedFile + "/" + file.getName();
+			System.out.println(img);
+			System.out.println(selectedImg.toString());
+			BufferedImage find = ImageIO.read(new File(selectedImg.toString() + "/Superman.png"));
+			BufferedImage image = ImageIO.read(new File(img));
+			String temp = caminho;
+			caminho += file.getName();
+			fm.isOnImagem(find, image, caminho);
+			caminho = temp;
 		}
+
+		for (File a : f.listFiles()) {
+			dlm.addElement(a.getName());
+		}
+
 		listaDeImagem.setModel(dlm);
 		listaDePesquisa.setModel(dlm);
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -32,11 +59,11 @@ public class Find extends javax.swing.JFrame {
 
 		jScrollPane1 = new javax.swing.JScrollPane();
 		listaDeImagem = new javax.swing.JList<>();
-		jButton1 = new javax.swing.JButton();
+		btnProcura = new javax.swing.JButton();
 		jTextField1 = new javax.swing.JTextField();
 		jTextField2 = new javax.swing.JTextField();
-		jButton2 = new javax.swing.JButton();
-		jButton3 = new javax.swing.JButton();
+		btnPasta = new javax.swing.JButton();
+		btnImage = new javax.swing.JButton();
 		painelImagem = new javax.swing.JPanel();
 		show_image = new javax.swing.JLabel();
 		jScrollPane3 = new javax.swing.JScrollPane();
@@ -44,16 +71,31 @@ public class Find extends javax.swing.JFrame {
 
 		jScrollPane1.setViewportView(listaDeImagem);
 
-		jButton1.setText("Procurar");
-		jButton1.addActionListener(new java.awt.event.ActionListener() {
+		btnProcura.setText("Procurar");
+		btnProcura.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton1ActionPerformed(evt);
+				try {
+					btnProcuraActionPerformed(evt);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
 			}
 		});
 
-		jButton2.setText("Pasta");
+		btnPasta.setText("Pasta");
+		btnPasta.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnPastaActionPerformed(evt);
+			}
+		});
 
-		jButton3.setText("Imgem");
+		btnImage.setText("Imgem");
+		btnImage.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnImageActionPerformed(evt);
+			}
+		});
 
 		painelImagem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -89,7 +131,7 @@ public class Find extends javax.swing.JFrame {
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
 				.createSequentialGroup().addContainerGap()
 				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE,
+						.addComponent(btnProcura, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addGroup(layout.createSequentialGroup().addGroup(layout
 								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,9 +150,9 @@ public class Find extends javax.swing.JFrame {
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
 										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE,
+										.addComponent(btnPasta, javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 144,
+										.addComponent(btnImage, javax.swing.GroupLayout.DEFAULT_SIZE, 144,
 												Short.MAX_VALUE)
 										.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0,
 												Short.MAX_VALUE))))
@@ -126,29 +168,28 @@ public class Find extends javax.swing.JFrame {
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jButton2))
+								.addComponent(btnPasta))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(jButton3))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jButton1)
+								.addComponent(btnImage))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(btnProcura)
 						.addContainerGap()));
 
 		pack();
 	}
 
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnProcuraActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
 		addListImage();
 	}
 
 	private void show_imageAncestorAdded(javax.swing.event.AncestorEvent evt) {
 		listaDeImagem.addListSelectionListener(new ListSelectionListener() {
-
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					String selectedValue = listaDeImagem.getSelectedValue();
-					ImageIcon m = new ImageIcon("C:\\Users\\marce\\git\\Projeto-PCD\\src\\img\\out\\" + selectedValue);
+					ImageIcon m = new ImageIcon(f.toString() + "/" + selectedValue);
 					show_image.setIcon(m);
 				}
 
@@ -157,10 +198,17 @@ public class Find extends javax.swing.JFrame {
 
 	}
 
+	private void btnPastaActionPerformed(java.awt.event.ActionEvent evt) {
+		addCaminho();
+	}
+
+	private void btnImageActionPerformed(java.awt.event.ActionEvent evt) {
+		addCaminhoImg();
+	}
+
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-
 				new Find().setVisible(true);
 
 			}
@@ -168,9 +216,9 @@ public class Find extends javax.swing.JFrame {
 	}
 
 	// Variables declaration - do not modify
-	private javax.swing.JButton jButton1;
-	private javax.swing.JButton jButton2;
-	private javax.swing.JButton jButton3;
+	private javax.swing.JButton btnProcura;
+	private javax.swing.JButton btnPasta;
+	private javax.swing.JButton btnImage;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane3;
 	private javax.swing.JTextField jTextField1;

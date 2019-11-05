@@ -11,10 +11,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
 public class FindImage {
+	/*static String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
+	static String img = "";
+	static String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
 
-
-	/*public static void main(String[] args) {
- origin/master
+	public static void main(String[] args) {
 
 		try {
 			File selectedFile = fileChooser();
@@ -22,8 +23,6 @@ public class FindImage {
 			for (File file : selectedFile.listFiles()) {
 				System.out.println(file.getName());
 
-				img = selectedFile + "/" + file.getName();
-				System.out.println(img);
 
 				BufferedImage find = ImageIO.read(new File(findImage));
 				BufferedImage image = ImageIO.read(new File(img));
@@ -36,14 +35,14 @@ public class FindImage {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-*/
+	}*/
+
 	/*
 	 * The image function receives an image that will be compared with an already
 	 * determined image, checking if there is one image inside the other, all behind
 	 * rgb, returning true or false, for existence.
 	 */
-	private static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
+	public static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
 
