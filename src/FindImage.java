@@ -13,12 +13,15 @@ import javax.swing.JFileChooser;
 public class FindImage {
 
 
+
 	public static void main(String[] args) {
-		//String findImage = "C:/Users/marce/git/Projeto-PCD/src/img/in/Superman.png";
+		
 		String img = "";
 		String findImage ="/Users/ivocosta/git/Projeto-PCD/src/img/in/Superman.png";
 		//String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
 		String caminho ="/Users/ivocosta/git/Projeto-PCD/src/img/modified/";
+
+	
 
 	
 		try {
