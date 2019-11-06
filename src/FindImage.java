@@ -45,7 +45,6 @@ public class FindImage {
 			}
 
 		}
-		System.out.println("Finish");
 	}
 
 	/*
