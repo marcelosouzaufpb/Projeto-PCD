@@ -35,10 +35,10 @@ public class View extends javax.swing.JFrame {
 		String img = "";
 		for (File file : caminhoPasta.listFiles()) {
 			img = caminhoPasta + "/" + file.getName();
-			
+
 			BufferedImage find = ImageIO.read(new File(caminhoLogo.toString() + "/Superman.png"));
 			BufferedImage image = ImageIO.read(new File(img));
-			
+
 			String caminhoTemporario = caminhoImagensModificadas;
 			caminhoImagensModificadas += file.getName();
 			FindImage.isOnImagem(find, image, caminhoImagensModificadas);
