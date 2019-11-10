@@ -128,6 +128,7 @@ public class FindImage {
 
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
+		
 		int returnValue = jfc.showOpenDialog(null);
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
