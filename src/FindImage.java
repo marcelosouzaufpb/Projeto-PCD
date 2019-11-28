@@ -12,46 +12,12 @@ import javax.swing.JFileChooser;
 
 public class FindImage {
 
-
-
-	public static void main(String[] args) {
-		
-		String img = "";
-		String findImage ="/Users/ivocosta/git/Projeto-PCD/src/img/in/Superman.png";
-		//String caminho = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
-		String caminho ="/Users/ivocosta/git/Projeto-PCD/src/img/modified/";
-
-	
-
-	
-		try {
-			File selectedFile = fileChooser();
-
-			for (File file : selectedFile.listFiles()) {
-				System.out.println(file.getName());
-
-				img = selectedFile + "/" + file.getName();
-				System.out.println(img);
-
-				BufferedImage find = ImageIO.read(new File(findImage));
-				BufferedImage image = ImageIO.read(new File(img));
-				String temp = caminho;
-				caminho += file.getName();
-				isOnImagem(find, image, caminho);
-				caminho = temp;
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	/*
 	 * The image function receives an image that will be compared with an already
 	 * determined image, checking if there is one image inside the other, all behind
 	 * rgb, returning true or false, for existence.
 	 */
-	private static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
+	public static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
 
@@ -79,7 +45,6 @@ public class FindImage {
 			}
 
 		}
-		System.out.println("Finish");
 	}
 
 	/*
