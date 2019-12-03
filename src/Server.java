@@ -1,75 +1,63 @@
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-public class Server {
-	private ServerSocket serverSocket;
-
-	private void criarServerSocket(int porta) throws IOException {
-		this.serverSocket = new ServerSocket(porta);
-	}
-
-	private Socket esperaConexao() throws IOException {
-		Socket socket = serverSocket.accept();
-		return socket;
-	}
-
-	private void tratarConexao(Socket socket) {
-		/*
-		 * Protocolo da aplicação
-		 */
-		try {
-			/* 3 - Criar streams de entrada e saida; */
-
-			ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-
-			/*
-			 * Protocolo Cliente --> Hello Serve <--- Hello World
-			 * 
-			 * 4 - Tratar a conversção entre cliente e servidor
-			 */
-
-			String msg = input.readUTF();
-			System.out.println("Mensagem recebida...");
-			output.writeUTF("HELLO WORLD!");
-
-			// 4.2 - Fechar streams de entrada e saida
-			input.close();
-			output.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			/* 4.1 - Fechar soket de comunicação entre cliente/servidor */
-			fecharSocket(socket);
-		}
-	}
-
-	private void fecharSocket(Socket s) {
-		try {
-			s.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void main(String[] args) {
-		Server server = new Server();
-		try {
-			System.out.print("Aguarddando conexao...");
-			server.criarServerSocket(5555);
-			System.out.print("Cliente conectado...");
-			Socket socket = server.esperaConexao();
-			server.tratarConexao(socket);
-			System.out.print("Cliente finalizado...");
-			// Protocolo de gerenciamneto de comunicação
-		} catch (IOException e) {
-			e.printStackTrace();
-			// Tratar exeção
-		}
-
-	}
-}
+// A Java program for a Server 
+import java.net.*; 
+import java.io.*; 
+  
+public class Server 
+{ 
+    //initialize socket and input stream 
+    private Socket          socket   = null; 
+    private ServerSocket    server   = null; 
+    private DataInputStream in       =  null; 
+  
+    // constructor with port 
+    public Server(int port) 
+    { 
+        // starts server and waits for a connection 
+        try
+        { 
+            server = new ServerSocket(port); 
+            System.out.println("Server started"); 
+  
+            System.out.println("Waiting for a client ..."); 
+  
+            socket = server.accept(); 
+            System.out.println("Client accepted"); 
+  
+            // takes input from the client socket 
+            in = new DataInputStream( 
+                new BufferedInputStream(socket.getInputStream())); 
+  
+            String line = ""; 
+  
+            // reads message from client until "Over" is sent 
+            while (!line.equals("Over")) 
+            { 
+                try
+                { 
+                    line = in.readUTF(); 
+                    System.out.println(line); 
+  
+                } 
+                catch(IOException i) 
+                { 
+                    System.out.println(i); 
+                } 
+            } 
+            System.out.println("Closing connection"); 
+  
+            // close connection 
+            socket.close(); 
+            in.close(); 
+        } 
+        catch(IOException i) 
+        { 
+            System.out.println(i); 
+        } 
+    } 
+  
+    public static void main(String args[]) 
+    { 
+        Server server = new Server(12345
+        		); 
+    } 
+} 
