@@ -8,6 +8,8 @@ public class Server {
 	private Socket socket = null;
 	private ServerSocket server = null;
 	private DataInputStream in = null;
+	private DataOutputStream out = null;
+	
 
 	// constructor with port
 	public Server(int port) {
@@ -23,7 +25,7 @@ public class Server {
 
 			// takes input from the client socket
 			in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-
+			out = new DataOutputStream(socket.getOutputStream());
              
 			String line = "";
 			
@@ -35,12 +37,12 @@ public class Server {
 
 					System.out.println(line);
 					if (line.equals("BTN90")) {
-						System.out.println("ADD TRAB 90");
+						out.writeUTF("ADD TRAB 90");
 						
-					} else if (line.equals("btn180")) {
+					} else if (line.equals("BTN180")) {
 						System.out.println("ADD TRAB 180");
 
-					} else if (line.equals("btnSIMPLES")) {
+					} else if (line.equals("BTNSIMPLES")) {
 						System.out.println("ADD TRAB SIMPLES");
 						
 					} else if (line.equals("BTNCLIENTE")) {
