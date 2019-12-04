@@ -40,15 +40,19 @@ public class Server {
 						out.writeUTF("ADD TRAB 90");
 						
 					} else if (line.equals("BTN180")) {
-						System.out.println("ADD TRAB 180");
+						out.writeUTF("ADD TRAB 180");
 
 					} else if (line.equals("BTNSIMPLES")) {
-						System.out.println("ADD TRAB SIMPLES");
+						out.writeUTF("ADD TRAB SIMPLES");
 						
 					} else if (line.equals("BTNCLIENTE")) {
-						System.out.println("Cliente add...");
+						out.writeUTF("Cliente add...");
+						View view = new View();
+						view.show();
+					
+						
 					} else {
-						System.out.println("Não existe esse tipo de usuario...");
+						out.writeUTF("Não existe esse tipo de usuario...");
 					}
 
 				} catch (IOException i) {
