@@ -35,14 +35,18 @@
 	  
 	        // string to read message from input 
 	        String line = ""; 
+	        
 	  
 	        // keep reading until "Over" is input 
-	        while (!line.equals("Over")) 
+	        while (!line.equals("OVER")) 
 	        { 
 	            try
 	            { 
 	                line = input.readLine(); 
+	                line= line.toUpperCase();
 	                out.writeUTF(line); 
+	               
+	                
 	            } 
 	            catch(IOException i) 
 	            { 
