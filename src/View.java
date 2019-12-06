@@ -55,7 +55,7 @@ public class View extends javax.swing.JFrame {
 		listaImagens.setModel(listaImagensModificadas);
 	}
 
-	private static void addListaProcura() {
+	static void addListaProcura() {
 		listaDeProcura.addElement("Procura Simples");
 		listaProcura.setModel(listaDeProcura);
 	}
@@ -251,15 +251,7 @@ public class View extends javax.swing.JFrame {
 		}
 	}
 
-	public static void main(String args[]) {
-
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new View().setVisible(true);
-				addListaProcura();
-			}
-		});
-	}
+	
 
 	private javax.swing.JToggleButton btnImagem;
 	private javax.swing.JToggleButton btnPasta;
