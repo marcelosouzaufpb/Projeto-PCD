@@ -1,24 +1,23 @@
+package Sistema;
 
-// A Java program for a Server 
-import java.net.*;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import javax.net.ssl.SSLContext;
+import javafx.concurrent.Worker;
 
-import RMI.Cliente;
-
-import java.io.*;
-
-public class Server implements Runnable {
-	public Socket cliente;
+public class Servidor implements Runnable {
+	public Socket usuario;
 	private DataOutputStream out = null;
 	private DataInputStream in = null;
-	private  ArrayList<Worker> lista = new ArrayList<Worker>();
-	private  static int cont=0;
+	private static int cont = 0;
 
-	public Server(Socket cliente) {
-		this.cliente = cliente;
+	public Servidor(Socket usuario) {
+		this.usuario = usuario;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -27,17 +26,17 @@ public class Server implements Runnable {
 		ServerSocket servidor = new ServerSocket(12345);
 		System.out.println("Porta 12345 aberta!");
 
-		// Aguarda algu√©m se conectar. A execu√ß√£o do servidor
-		// fica bloqueada na chamada do m√©todo accept da classe
-		// ServerSocket. Quando algu√©m se conectar ao servidor, o
-		// m√©todo desbloqueia e retorna com um objeto da classe
-		// Socket, que √© uma porta da comunica√ß√£o.
-		System.out.println("Aguardando conex√£o do cliente...");
+		// Aguarda alguÈm se conectar. A execuÁ„o do servidor
+		// fica bloqueada na chamada do mÈtodo accept da classe
+		// ServerSocket. Quando alguÈm se conectar ao servidor, o
+		// mÈtodo desbloqueia e retorna com um objeto da classe
+		// Socket, que È uma porta da comunicaÁ„o.
+		System.out.println("Aguardando conex„o do cliente...");
 
 		while (true) {
-			Socket cliente = servidor.accept();
-			// Cria uma thread do servidor para tratar a conex√£o
-			Server tratamento = new Server(cliente);
+			Socket usuario = servidor.accept();
+			// Cria uma thread do servidor para tratar a conex„o
+			Servidor tratamento = new Servidor(usuario);
 			Thread t = new Thread(tratamento);
 			// Inicia a thread para o cliente conectado
 			t.start();
@@ -47,14 +46,14 @@ public class Server implements Runnable {
 	}
 
 	/*
-	 * A classe Thread, que foi instancia no servidor, implementa Runnable. Ent√£o
-	 * voc√™ ter√° que implementar sua l√≥gica de troca de mensagens dentro deste
-	 * m√©todo 'run'.
+	 * A classe Thread, que foi instancia no servidor, implementa Runnable. Ent„o
+	 * vocÍ ter· que implementar sua lÛgica de troca de mensagens dentro deste
+	 * mÈtodo 'run'.
 	 */
 	public void run() {
 		try {
-			out = new DataOutputStream(cliente.getOutputStream());
-			in = new DataInputStream(new BufferedInputStream(cliente.getInputStream()));
+			out = new DataOutputStream(usuario.getOutputStream());
+			in = new DataInputStream(new BufferedInputStream(usuario.getInputStream()));
 			String line = "";
 
 			// reads message from client until "Over" is sent
@@ -73,10 +72,8 @@ public class Server implements Runnable {
 
 					} else if (line.equals("BTNCLIENTE")) {
 						System.out.println("Cliente add...");
-						View view = new View();
-						view.show();
 					} else {
-						System.out.println("N√£o existe esse tipo de usuario...");
+						System.out.println("N„o existe esse tipo de usuario...");
 						out.writeUTF("nao");
 					}
 
@@ -97,7 +94,7 @@ public class Server implements Runnable {
 
 		// close connection
 		try {
-			cliente.close();
+			usuario.close();
 			in.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -125,7 +122,7 @@ public class Server implements Runnable {
  * System.out.println("ADD TRAB SIMPLES");
  * 
  * } else if (line.equals("BTNCLIENTE")) { System.out.println("Cliente add...");
- * } else { System.out.println("N√£o existe esse tipo de usuario...");
+ * } else { System.out.println("N„o existe esse tipo de usuario...");
  * out.writeUTF("ok"); }
  * 
  * } System.out.println("Closing connection");

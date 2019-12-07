@@ -1,5 +1,5 @@
+package Sistema;
 
-// A Java program for a Client 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,33 +7,35 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client implements Runnable {
+import com.sun.glass.ui.View;
 
-	private Socket cliente;
+public class Usuario implements Runnable {
+
+	private Socket usuario;
 	private DataInputStream input = null;
 	private DataOutputStream out = null;
 	private DataInputStream in = null;
 	private View view = null;
 
-	public Client(Socket cliente) {
-		this.cliente = cliente;
+	public Usuario(Socket usuario) {
+		this.usuario = usuario;
 	}
 
 	public static void main(String args[]) throws UnknownHostException, IOException {
 
 		// para se conectar ao servidor, cria-se objeto Socket.
-		// O primeiro par√¢metro √© o IP ou endere√ßo da m√°quina que
-		// se quer conectar e o segundo √© a porta da aplica√ß√£o.
-		// Neste caso, usa-se o IP da m√°quina local (127.0.0.1)
-		// e a porta da aplica√ß√£o ServidorDeEco (12345).
+		// O primeiro par‚metro È o IP ou endereÁo da m·quina que
+		// se quer conectar e o segundo È a porta da aplicaÁ„o.
+		// Neste caso, usa-se o IP da m·quina local (127.0.0.1)
+		// e a porta da aplicaÁ„o ServidorDeEco (12345).
 		Socket socket = new Socket("127.0.0.1", 12345);
 
 		/*
-		 * Cria um novo objeto Cliente com a conex√£o socket para que seja executado em
-		 * um novo processo. Permitindo assim a conex√£o de v√°rio clientes com o
+		 * Cria um novo objeto Cliente com a conex„o socket para que seja executado em
+		 * um novo processo. Permitindo assim a conex„o de v·rio clientes com o
 		 * servidor.
 		 */
-		Client c = new Client(socket);
+		Usuario c = new Usuario(socket);
 		Thread t = new Thread(c);
 		t.start();
 		System.out.println(t);
@@ -51,16 +53,8 @@ public class Client implements Runnable {
 			input = new DataInputStream(System.in);
 
 			// sends output to the socket
-			out = new DataOutputStream(cliente.getOutputStream());
-			in = new DataInputStream(new BufferedInputStream(cliente.getInputStream()));
-			view = new View();
-
-			java.awt.EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					view.setVisible(true);
-					view.addListaProcura();
-				}
-			});
+			out = new DataOutputStream(usuario.getOutputStream());
+			in = new DataInputStream(new BufferedInputStream(usuario.getInputStream()));
 
 		} catch (UnknownHostException u) {
 			System.out.println(u);
@@ -89,9 +83,13 @@ public class Client implements Runnable {
 		try {
 			input.close();
 			out.close();
-			cliente.close();
+			usuario.close();
 		} catch (IOException i) {
 			System.out.println(i);
 		}
+	}
+	
+	public Socket socket() {
+		return this.usuario;
 	}
 }
