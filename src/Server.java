@@ -75,6 +75,7 @@ public class Server implements Runnable {
 						System.out.println("Cliente add...");
 						View view = new View();
 						view.show();
+						
 					} else {
 						System.out.println("Não existe esse tipo de usuario...");
 						out.writeUTF("nao");
