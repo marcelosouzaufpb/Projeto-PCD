@@ -1,10 +1,7 @@
 package Telas;
 
-import Sistema.Servidor;
-import Sistema.Usuario;
-
-public class InicioTela extends javax.swing.JFrame {
-	public InicioTela() {
+public class ConexaoTela extends javax.swing.JFrame {
+	public ConexaoTela() {
 		initComponents();
 	}
 
@@ -77,11 +74,11 @@ public class InicioTela extends javax.swing.JFrame {
 	}
 
 	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		new UsuarioTela().setVisible(true);
+		new ConexaoTela().setVisible(true);
 	}
 
 	private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        	new ServidorTela().setVisible(true);
+		new ConexaoTela().setVisible(true);
 	}
 
 	public static void main(String args[]) {
@@ -94,22 +91,18 @@ public class InicioTela extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(InicioTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(InicioTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(InicioTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(InicioTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
-					ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new InicioTela().setVisible(true);
+				new ConexaoTela().setVisible(true);
 			}
 		});
 	}

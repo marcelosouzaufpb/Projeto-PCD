@@ -7,17 +7,14 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-
-
-public class Usuario implements Runnable {
+public class Cliente implements Runnable {
 
 	private Socket usuario;
 	private DataInputStream input = null;
 	private DataOutputStream out = null;
 	private DataInputStream in = null;
-	
 
-	public Usuario(Socket usuario) {
+	public Cliente(Socket usuario) {
 		this.usuario = usuario;
 	}
 
@@ -35,7 +32,7 @@ public class Usuario implements Runnable {
 		 * um novo processo. Permitindo assim a conex�o de v�rio clientes com o
 		 * servidor.
 		 */
-		Usuario c = new Usuario(socket);
+		Cliente c = new Cliente(socket);
 		Thread t = new Thread(c);
 		t.start();
 		System.out.println(t);
@@ -88,7 +85,7 @@ public class Usuario implements Runnable {
 			System.out.println(i);
 		}
 	}
-	
+
 	public Socket socket() {
 		return this.usuario;
 	}

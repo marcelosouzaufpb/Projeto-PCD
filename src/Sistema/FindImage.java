@@ -2,6 +2,9 @@ package Sistema;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -95,7 +98,6 @@ public class FindImage {
 
 		jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		
 		int returnValue = jfc.showOpenDialog(null);
 
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -105,6 +107,32 @@ public class FindImage {
 
 		}
 		return null;
+	}
+
+	public static BufferedImage rotateImage(BufferedImage rotateImage, double angle) {
+		angle %= 360;
+		if (angle < 0)
+			angle += 360;
+		int quadrants = (int) angle / 90;
+		double restAngle = angle % 90;
+		if (restAngle < 0)
+			restAngle += 90;
+
+		AffineTransform tx = new AffineTransform();
+		tx.rotate(Math.toRadians(restAngle), rotateImage.getWidth() / 2.0, rotateImage.getHeight() / 2.0);
+
+		double ytrans = tx.transform(new Point2D.Double(0.0, 0.0), null).getY();
+		double xtrans = tx.transform(new Point2D.Double(0, rotateImage.getHeight()), null).getX();
+
+		AffineTransform translationTransform = new AffineTransform();
+		translationTransform.translate(-xtrans, -ytrans);
+		tx.preConcatenate(translationTransform);
+
+		BufferedImage b2 = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR).filter(rotateImage, null);
+
+		AffineTransform fix = AffineTransform.getQuadrantRotateInstance(quadrants, b2.getWidth() / 2.0,
+				b2.getHeight() / 2.0);
+		return new AffineTransformOp(fix, AffineTransformOp.TYPE_BILINEAR).filter(b2, null);
 	}
 
 }

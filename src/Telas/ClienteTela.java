@@ -1,4 +1,3 @@
-
 package Telas;
 
 import java.awt.CardLayout;
@@ -14,17 +13,20 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Sistema.FindImage;
+import Sistema.Trabalhador;
 
-public class UsuarioTela extends javax.swing.JFrame {
+public class ClienteTela extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private DefaultListModel<String> listaImagensModificadas = new DefaultListModel<String>();
 	private static DefaultListModel<String> listaDeProcura = new DefaultListModel<String>();
+	private static DefaultListModel<String> listaDeProcura2 = new DefaultListModel<String>();
 	private File caminhoPasta;
 	private File caminhoLogo;
-	private String caminhoImagensModificadas = "/Users/ivocosta/git/Projeto-PCD/src/img/modified";
+	private String caminhoImagensModificadas = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
+	private static Trabalhador tipoPesquisa = new Trabalhador();
 
-	public UsuarioTela() {
+	public ClienteTela() {
 		initComponents();
 	}
 
@@ -62,8 +64,14 @@ public class UsuarioTela extends javax.swing.JFrame {
 		listaImagens.setModel(listaImagensModificadas);
 	}
 
-	public void addListaProcura() {
+	public static void addListaProcura() {
 		listaDeProcura.addElement("Procura Simples");
+		listaDeProcura2.addElement("Procura Simples");
+		for (String s : tipoPesquisa.tipoPesquisa) {
+			listaDeProcura2.addElement(s);
+			listaDeProcura.addElement(s);
+		}
+		listaProcura2.setModel(listaDeProcura2);
 		listaProcura.setModel(listaDeProcura);
 	}
 
@@ -86,6 +94,17 @@ public class UsuarioTela extends javax.swing.JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					String selectedValue = listaProcura.getSelectedValue();
+					System.out.println(selectedValue);
+				}
+			}
+		});
+	}
+	
+	private void usuarioSelecionaProcura2() {
+		listaProcura2.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting()) {
+					String selectedValue = listaProcura2.getSelectedValue();
 					System.out.println(selectedValue);
 				}
 			}
@@ -115,12 +134,12 @@ public class UsuarioTela extends javax.swing.JFrame {
 		listaImagens = new javax.swing.JList<>();
 		UsuarioTrabalhadorFim = new javax.swing.JPanel();
 		jScrollPane4 = new javax.swing.JScrollPane();
-		jList3 = new javax.swing.JList<>();
+		listaProcura2 = new javax.swing.JList<>();
 		jLabel2 = new javax.swing.JLabel();
 		jLabel3 = new javax.swing.JLabel();
-		jTextField1 = new javax.swing.JTextField();
-		jButton1 = new javax.swing.JButton();
-		jButton2 = new javax.swing.JButton();
+		inputAddPesquisa = new javax.swing.JTextField();
+		btnSalvarPesquisa = new javax.swing.JButton();
+		btnProximoTrabalhador = new javax.swing.JButton();
 		UsuarioTrabalhadorFuncao = new javax.swing.JPanel();
 		jLabel4 = new javax.swing.JLabel();
 
@@ -155,9 +174,9 @@ public class UsuarioTela extends javax.swing.JFrame {
 		});
 
 		jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); 
+		jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48));
 		jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		jLabel1.setText("Voce Ã© um Cliente ou um Trabalhador?");
+		jLabel1.setText("Voce é um Cliente ou um Trabalhador?");
 
 		javax.swing.GroupLayout UsuarioPanelLayout = new javax.swing.GroupLayout(UsuarioPanel);
 		UsuarioPanel.setLayout(UsuarioPanelLayout);
@@ -267,6 +286,18 @@ public class UsuarioTela extends javax.swing.JFrame {
 			public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
 			}
 		});
+
+		listaProcura2.addAncestorListener(new javax.swing.event.AncestorListener() {
+			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+				listaProcura2AncestorMoved(evt);
+			}
+
+			public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+			}
+
+			public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+			}
+		});
 		jScrollPane2.setViewportView(listaProcura);
 
 		listaImagens.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -318,7 +349,7 @@ public class UsuarioTela extends javax.swing.JFrame {
 
 		UsuarioTrabalhadorFim.setBackground(new java.awt.Color(40, 167, 69));
 
-		jScrollPane4.setViewportView(jList3);
+		jScrollPane4.setViewportView(listaProcura2);
 
 		jLabel2.setBackground(new java.awt.Color(255, 255, 255));
 		jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
@@ -330,12 +361,17 @@ public class UsuarioTela extends javax.swing.JFrame {
 		jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel3.setText("Selecione seu tipo de pesquisa? ");
 
-		jButton1.setBackground(new java.awt.Color(0, 123, 255));
-		jButton1.setText("Salvar");
+		btnSalvarPesquisa.setBackground(new java.awt.Color(0, 123, 255));
+		btnSalvarPesquisa.setText("Salvar");
+		btnSalvarPesquisa.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btnSalvarPesquisaActionPerformed(evt);
+			}
+		});
 
-		jButton2.setBackground(new java.awt.Color(255, 193, 7));
-		jButton2.setText("Proximo");
-		jButton2.addActionListener(new java.awt.event.ActionListener() {
+		btnProximoTrabalhador.setBackground(new java.awt.Color(255, 193, 7));
+		btnProximoTrabalhador.setText("Proximo");
+		btnProximoTrabalhador.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton2ActionPerformed(evt);
 			}
@@ -343,24 +379,24 @@ public class UsuarioTela extends javax.swing.JFrame {
 
 		javax.swing.GroupLayout UsuarioTrabalhadorFimLayout = new javax.swing.GroupLayout(UsuarioTrabalhadorFim);
 		UsuarioTrabalhadorFim.setLayout(UsuarioTrabalhadorFimLayout);
-		UsuarioTrabalhadorFimLayout.setHorizontalGroup(
-				UsuarioTrabalhadorFimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(UsuarioTrabalhadorFimLayout.createSequentialGroup().addContainerGap()
-								.addGroup(UsuarioTrabalhadorFimLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(jTextField1)
-										.addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-										.addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addGroup(UsuarioTrabalhadorFimLayout.createSequentialGroup()
-												.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 600,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 600,
-														javax.swing.GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap()));
+		UsuarioTrabalhadorFimLayout.setHorizontalGroup(UsuarioTrabalhadorFimLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(UsuarioTrabalhadorFimLayout.createSequentialGroup().addContainerGap()
+						.addGroup(UsuarioTrabalhadorFimLayout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(inputAddPesquisa)
+								.addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
+								.addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(UsuarioTrabalhadorFimLayout.createSequentialGroup()
+										.addComponent(btnSalvarPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 600,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(btnProximoTrabalhador, javax.swing.GroupLayout.PREFERRED_SIZE,
+												600, javax.swing.GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap()));
 		UsuarioTrabalhadorFimLayout.setVerticalGroup(
 				UsuarioTrabalhadorFimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(UsuarioTrabalhadorFimLayout.createSequentialGroup().addGap(8, 8, 8)
@@ -373,14 +409,14 @@ public class UsuarioTela extends javax.swing.JFrame {
 								.addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+								.addComponent(inputAddPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 								.addGroup(UsuarioTrabalhadorFimLayout
 										.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+										.addComponent(btnSalvarPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
+										.addComponent(btnProximoTrabalhador, javax.swing.GroupLayout.PREFERRED_SIZE, 50,
 												javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
@@ -390,7 +426,7 @@ public class UsuarioTela extends javax.swing.JFrame {
 
 		jLabel4.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		jLabel4.setText("Trabalhador 180Â°.");
+		jLabel4.setText("Trabalhador 180°.");
 
 		javax.swing.GroupLayout UsuarioTrabalhadorFuncaoLayout = new javax.swing.GroupLayout(UsuarioTrabalhadorFuncao);
 		UsuarioTrabalhadorFuncao.setLayout(UsuarioTrabalhadorFuncaoLayout);
@@ -419,6 +455,12 @@ public class UsuarioTela extends javax.swing.JFrame {
 		pack();
 	}
 
+	private void btnSalvarPesquisaActionPerformed(java.awt.event.ActionEvent evt) {
+		String pesquisa = inputAddPesquisa.getText();
+		tipoPesquisa.add(pesquisa);
+
+	}
+
 	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 		CardLayout c1 = (CardLayout) JpanelUsuario.getLayout();
 		c1.show(JpanelUsuario, "tela1");
@@ -445,6 +487,10 @@ public class UsuarioTela extends javax.swing.JFrame {
 	private void listaProcuraAncestorMoved(javax.swing.event.AncestorEvent evt) {
 		usuarioSelecionaProcura();
 	}
+	private void listaProcura2AncestorMoved(javax.swing.event.AncestorEvent evt) {
+		usuarioSelecionaProcura2();
+	}
+
 
 	private void listaImagensAncestorMoved(javax.swing.event.AncestorEvent evt) {
 		usuarioSelecionaImagem();
@@ -467,8 +513,8 @@ public class UsuarioTela extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new UsuarioTela().setVisible(true);
-				new UsuarioTela().addListaProcura();
+				new ClienteTela().setVisible(true);
+				addListaProcura();
 			}
 		});
 	}
@@ -484,21 +530,21 @@ public class UsuarioTela extends javax.swing.JFrame {
 	private javax.swing.JLabel campoImagem;
 	private javax.swing.JTextField inputImagem;
 	private javax.swing.JTextField inputPasta;
-	private javax.swing.JButton jButton1;
-	private javax.swing.JButton jButton2;
+	private javax.swing.JButton btnSalvarPesquisa;
+	private javax.swing.JButton btnProximoTrabalhador;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;
 	private javax.swing.JLabel jLabel4;
-	private javax.swing.JList<String> jList3;
+	private static javax.swing.JList<String> listaProcura2;
 	private javax.swing.JPanel jPanel2;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JScrollPane jScrollPane3;
 	private javax.swing.JScrollPane jScrollPane4;
-	private javax.swing.JTextField jTextField1;
+	private javax.swing.JTextField inputAddPesquisa;
 	private javax.swing.JToggleButton jToggleButton1;
 	private javax.swing.JToggleButton jToggleButton2;
 	private javax.swing.JList<String> listaImagens;
-	private javax.swing.JList<String> listaProcura;
+	private static javax.swing.JList<String> listaProcura;
 }
