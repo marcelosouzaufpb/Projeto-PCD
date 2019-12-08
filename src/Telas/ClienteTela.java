@@ -18,6 +18,7 @@ import Sistema.Trabalhador;
 public class ClienteTela extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private static double angulo = 0;
 	private DefaultListModel<String> listaImagensModificadas = new DefaultListModel<String>();
 	private static DefaultListModel<String> listaDeProcura = new DefaultListModel<String>();
 	private static DefaultListModel<String> listaDeProcura2 = new DefaultListModel<String>();
@@ -50,7 +51,7 @@ public class ClienteTela extends javax.swing.JFrame {
 
 			String caminhoTemporario = caminhoImagensModificadas;
 			caminhoImagensModificadas += file.getName();
-			FindImage.isOnImagem(find, image, caminhoImagensModificadas);
+			FindImage.isOnImagem(find, image, caminhoImagensModificadas, angulo);
 			caminhoImagensModificadas = caminhoTemporario;
 		}
 	}
@@ -66,6 +67,7 @@ public class ClienteTela extends javax.swing.JFrame {
 
 	public static void addListaProcura() {
 		listaDeProcura.addElement("Procura Simples");
+		listaDeProcura.addElement("90");
 		listaDeProcura2.addElement("Procura Simples");
 		for (String s : tipoPesquisa.tipoPesquisa) {
 			listaDeProcura2.addElement(s);
@@ -94,12 +96,17 @@ public class ClienteTela extends javax.swing.JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				if (!e.getValueIsAdjusting()) {
 					String selectedValue = listaProcura.getSelectedValue();
-					System.out.println(selectedValue);
+					if (selectedValue.equals("Procura Simples")) {
+						System.out.println(selectedValue + "\n");
+					} else {
+						angulo = Double.parseDouble(selectedValue);
+						System.out.print(selectedValue + "\n");
+					}
 				}
 			}
 		});
 	}
-	
+
 	private void usuarioSelecionaProcura2() {
 		listaProcura2.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -487,10 +494,10 @@ public class ClienteTela extends javax.swing.JFrame {
 	private void listaProcuraAncestorMoved(javax.swing.event.AncestorEvent evt) {
 		usuarioSelecionaProcura();
 	}
+
 	private void listaProcura2AncestorMoved(javax.swing.event.AncestorEvent evt) {
 		usuarioSelecionaProcura2();
 	}
-
 
 	private void listaImagensAncestorMoved(javax.swing.event.AncestorEvent evt) {
 		usuarioSelecionaImagem();
@@ -514,7 +521,7 @@ public class ClienteTela extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new ClienteTela().setVisible(true);
-				
+
 			}
 		});
 	}

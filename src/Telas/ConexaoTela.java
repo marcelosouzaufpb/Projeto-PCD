@@ -8,6 +8,7 @@ import Sistema.Cliente;
 import Sistema.Servidor;
 
 public class ConexaoTela extends javax.swing.JFrame {
+	private static final int port = 8080;
 	private ClienteTela clienteT;
 	private Cliente cliente;
 	private ServidorTela servidorT;
@@ -89,7 +90,7 @@ public class ConexaoTela extends javax.swing.JFrame {
 		new ClienteTela().setVisible(true);
 		clienteT.addListaProcura();
 		try {
-			Socket socket = new Socket("127.0.0.1", 12345);
+			Socket socket = new Socket("127.0.0.1", port);
 
 			Cliente c = new Cliente(socket);
 			Thread t = new Thread(c);
@@ -105,9 +106,7 @@ public class ConexaoTela extends javax.swing.JFrame {
 	private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		new ServidorTela().setVisible(true);
 		try {
-			ServerSocket servidor = new ServerSocket(12345);
-			System.out.println("Porta 12345 aberta!");
-			System.out.println("Aguardando conexao do cliente...");
+			ServerSocket servidor = new ServerSocket(port);
 			while (true) {
 				Socket usuario = servidor.accept();
 				Servidor tratamento = new Servidor(usuario);

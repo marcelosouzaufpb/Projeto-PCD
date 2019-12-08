@@ -22,16 +22,19 @@ public class FindImage {
 	 * determined image, checking if there is one image inside the other, all behind
 	 * rgb, returning true or false, for existence.
 	 */
-	public static void isOnImagem(BufferedImage find, BufferedImage image, String caminho) throws IOException {
-		for (int x = 0; x < image.getWidth(); x++) {
-			for (int y = 0; y < image.getHeight(); y++) {
+	public static void isOnImagem(BufferedImage find, BufferedImage image, String caminho, double angulo ) throws IOException {
+		BufferedImage encontrar = rotateImage(find, angulo);
+		BufferedImage imagem = rotateImage(image, angulo);
+		
+		for (int x = 0; x < imagem.getWidth(); x++) {
+			for (int y = 0; y < imagem.getHeight(); y++) {
 
 				boolean invalid = false;
 				int k = x, l = y;
-				for (int a = 0; a < find.getWidth(); a++) {
+				for (int a = 0; a < encontrar.getWidth(); a++) {
 					l = y;
-					for (int b = 0; b < find.getHeight(); b++) {
-						if (find.getRGB(a, b) != image.getRGB(k, l)) {
+					for (int b = 0; b < encontrar.getHeight(); b++) {
+						if (encontrar.getRGB(a, b) != imagem.getRGB(k, l)) {
 							invalid = true;
 							break;
 						} else {
@@ -41,8 +44,8 @@ public class FindImage {
 					if (invalid) {
 						break;
 					} else if (!invalid) {
-						drawRectangle(image, x, y, find.getWidth(), find.getHeight());
-						save(image, caminho);
+						drawRectangle(imagem, x, y, encontrar.getWidth(), encontrar.getHeight());
+						save(imagem, caminho);
 					} else {
 						k++;
 					}

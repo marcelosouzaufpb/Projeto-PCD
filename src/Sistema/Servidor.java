@@ -4,17 +4,12 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
-
 
 public class Servidor extends Thread {
 	public Socket usuario;
 	private DataOutputStream out = null;
 	private DataInputStream in = null;
-	private static int cont = 0;
 
 	public Servidor(Socket usuario) {
 		this.usuario = usuario;
@@ -22,6 +17,8 @@ public class Servidor extends Thread {
 
 	public void run() {
 		try {
+			System.out.println("Porta 12345 aberta!");
+			System.out.println("Aguardando conexao do cliente...");
 			out = new DataOutputStream(usuario.getOutputStream());
 			in = new DataInputStream(new BufferedInputStream(usuario.getInputStream()));
 			String line = "";
@@ -43,11 +40,8 @@ public class Servidor extends Thread {
 					} else if (line.equals("BTNCLIENTE")) {
 						System.out.println("Cliente add...");
 
-			
-						
-
 					} else {
-						System.out.println("N�o existe esse tipo de usuario...");
+						System.out.println("Nao existe esse tipo de usuario...");
 						out.writeUTF("nao");
 					}
 
