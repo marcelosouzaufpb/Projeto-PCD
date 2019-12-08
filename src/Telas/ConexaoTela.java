@@ -10,9 +10,6 @@ import Sistema.Servidor;
 public class ConexaoTela extends javax.swing.JFrame {
 	private static final int port = 8080;
 	private static ClienteTela clienteT;
-	private Cliente cliente;
-	private static ServidorTela servidorT;
-	private Servidor servidor;
 
 	public ConexaoTela() {
 		initComponents();
@@ -122,6 +119,7 @@ public class ConexaoTela extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		clienteT.getListaDeProcura().addElement("Procura Simples");
 		clienteT.getListaDeProcura().addElement("90");
+		clienteT.getListaDeProcura().addElement("180");
 		clienteT.getListaDeProcura2().addElement("Procura Simples");
 		clienteT.getListaDeProcura2().addElement("90");
 		try {

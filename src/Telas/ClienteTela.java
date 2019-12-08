@@ -470,7 +470,7 @@ public class ClienteTela extends javax.swing.JFrame {
 
 		jLabel4.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		jLabel4.setText("Trabalhador 180°.");
+		jLabel4.setText("Trabalhador " + inputAddPesquisa.getText() + "°");
 
 		javax.swing.GroupLayout UsuarioTrabalhadorFuncaoLayout = new javax.swing.GroupLayout(UsuarioTrabalhadorFuncao);
 		UsuarioTrabalhadorFuncao.setLayout(UsuarioTrabalhadorFuncaoLayout);
@@ -501,7 +501,7 @@ public class ClienteTela extends javax.swing.JFrame {
 
 	private void btnSalvarPesquisaActionPerformed(java.awt.event.ActionEvent evt) {
 		String pesquisa = inputAddPesquisa.getText();
-		//tipoPesquisa.add(pesquisa);
+		// tipoPesquisa.add(pesquisa);
 		addListaProcura2(inputAddPesquisa.getText());
 
 	}
@@ -559,6 +559,7 @@ public class ClienteTela extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new ClienteTela().setVisible(true);
+				addListaProcura();
 
 			}
 		});

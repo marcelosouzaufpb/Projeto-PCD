@@ -23,18 +23,18 @@ public class FindImage {
 	 * rgb, returning true or false, for existence.
 	 */
 	public static void isOnImagem(BufferedImage find, BufferedImage image, String caminho, double angulo ) throws IOException {
+		System.out.println(angulo);
 		BufferedImage encontrar = rotateImage(find, angulo);
-		BufferedImage imagem = rotateImage(image, angulo);
 		
-		for (int x = 0; x < imagem.getWidth(); x++) {
-			for (int y = 0; y < imagem.getHeight(); y++) {
+		for (int x = 0; x < image.getWidth(); x++) {
+			for (int y = 0; y < image.getHeight(); y++) {
 
 				boolean invalid = false;
 				int k = x, l = y;
 				for (int a = 0; a < encontrar.getWidth(); a++) {
 					l = y;
 					for (int b = 0; b < encontrar.getHeight(); b++) {
-						if (encontrar.getRGB(a, b) != imagem.getRGB(k, l)) {
+						if (encontrar.getRGB(a, b) != image.getRGB(k, l)) {
 							invalid = true;
 							break;
 						} else {
@@ -44,8 +44,8 @@ public class FindImage {
 					if (invalid) {
 						break;
 					} else if (!invalid) {
-						drawRectangle(imagem, x, y, encontrar.getWidth(), encontrar.getHeight());
-						save(imagem, caminho);
+						drawRectangle(image, x, y, encontrar.getWidth(), encontrar.getHeight());
+						save(image, caminho);
 					} else {
 						k++;
 					}
