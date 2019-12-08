@@ -9,9 +9,9 @@ import Sistema.Servidor;
 
 public class ConexaoTela extends javax.swing.JFrame {
 	private static final int port = 8080;
-	private ClienteTela clienteT;
+	private static ClienteTela clienteT;
 	private Cliente cliente;
-	private ServidorTela servidorT;
+	private static ServidorTela servidorT;
 	private Servidor servidor;
 
 	public ConexaoTela() {
@@ -120,7 +120,10 @@ public class ConexaoTela extends javax.swing.JFrame {
 	}
 
 	public static void main(String args[]) {
-
+		clienteT.getListaDeProcura().addElement("Procura Simples");
+		clienteT.getListaDeProcura().addElement("90");
+		clienteT.getListaDeProcura2().addElement("Procura Simples");
+		clienteT.getListaDeProcura2().addElement("90");
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {

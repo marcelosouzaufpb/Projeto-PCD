@@ -1,11 +1,5 @@
 package Telas;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-import Sistema.Servidor;
-
 public class ServidorTela extends javax.swing.JFrame {
 
 	public ServidorTela() {

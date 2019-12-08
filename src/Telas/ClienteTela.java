@@ -66,13 +66,49 @@ public class ClienteTela extends javax.swing.JFrame {
 	}
 
 	public static void addListaProcura() {
-		listaDeProcura.addElement("Procura Simples");
-		listaDeProcura.addElement("90");
-		listaDeProcura2.addElement("Procura Simples");
 		for (String s : tipoPesquisa.tipoPesquisa) {
 			listaDeProcura2.addElement(s);
 			listaDeProcura.addElement(s);
 		}
+		listaProcura2.setModel(listaDeProcura2);
+		listaProcura.setModel(listaDeProcura);
+	}
+
+	public static DefaultListModel<String> getListaDeProcura() {
+		return listaDeProcura;
+	}
+
+	public static void setListaDeProcura(DefaultListModel<String> listaDeProcura) {
+		ClienteTela.listaDeProcura = listaDeProcura;
+	}
+
+	public static DefaultListModel<String> getListaDeProcura2() {
+		return listaDeProcura2;
+	}
+
+	public static void setListaDeProcura2(DefaultListModel<String> listaDeProcura2) {
+		ClienteTela.listaDeProcura2 = listaDeProcura2;
+	}
+
+	public static javax.swing.JList<String> getListaProcura2() {
+		return listaProcura2;
+	}
+
+	public static void setListaProcura2(javax.swing.JList<String> listaProcura2) {
+		ClienteTela.listaProcura2 = listaProcura2;
+	}
+
+	public static javax.swing.JList<String> getListaProcura() {
+		return listaProcura;
+	}
+
+	public static void setListaProcura(javax.swing.JList<String> listaProcura) {
+		ClienteTela.listaProcura = listaProcura;
+	}
+
+	public static void addListaProcura2(String procura) {
+		listaDeProcura.addElement(procura);
+		listaDeProcura2.addElement(procura);
 		listaProcura2.setModel(listaDeProcura2);
 		listaProcura.setModel(listaDeProcura);
 	}
@@ -113,6 +149,7 @@ public class ClienteTela extends javax.swing.JFrame {
 				if (!e.getValueIsAdjusting()) {
 					String selectedValue = listaProcura2.getSelectedValue();
 					System.out.println(selectedValue);
+					inputAddPesquisa.setText(selectedValue);
 				}
 			}
 		});
@@ -380,7 +417,7 @@ public class ClienteTela extends javax.swing.JFrame {
 		btnProximoTrabalhador.setText("Proximo");
 		btnProximoTrabalhador.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton2ActionPerformed(evt);
+				btnProximoTrabalhadorActionPerformed(evt);
 			}
 		});
 
@@ -464,7 +501,8 @@ public class ClienteTela extends javax.swing.JFrame {
 
 	private void btnSalvarPesquisaActionPerformed(java.awt.event.ActionEvent evt) {
 		String pesquisa = inputAddPesquisa.getText();
-		tipoPesquisa.add(pesquisa);
+		//tipoPesquisa.add(pesquisa);
+		addListaProcura2(inputAddPesquisa.getText());
 
 	}
 
@@ -486,7 +524,7 @@ public class ClienteTela extends javax.swing.JFrame {
 		c2.show(JpanelUsuario, "tela2");
 	}
 
-	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void btnProximoTrabalhadorActionPerformed(java.awt.event.ActionEvent evt) {
 		CardLayout c2 = (CardLayout) JpanelUsuario.getLayout();
 		c2.show(JpanelUsuario, "tela3");
 	}
