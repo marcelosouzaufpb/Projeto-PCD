@@ -1,6 +1,18 @@
 package Telas;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import Sistema.Cliente;
+import Sistema.Servidor;
+
 public class ConexaoTela extends javax.swing.JFrame {
+	private ClienteTela clienteT;
+	private Cliente cliente;
+	private ServidorTela servidorT;
+	private Servidor servidor;
+
 	public ConexaoTela() {
 		initComponents();
 	}
@@ -74,11 +86,38 @@ public class ConexaoTela extends javax.swing.JFrame {
 	}
 
 	private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		new ConexaoTela().setVisible(true);
+		new ClienteTela().setVisible(true);
+		clienteT.addListaProcura();
+		try {
+			Socket socket = new Socket("127.0.0.1", 12345);
+
+			Cliente c = new Cliente(socket);
+			Thread t = new Thread(c);
+			t.start();
+			System.out.println(t);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-		new ConexaoTela().setVisible(true);
+		new ServidorTela().setVisible(true);
+		try {
+			ServerSocket servidor = new ServerSocket(12345);
+			System.out.println("Porta 12345 aberta!");
+			System.out.println("Aguardando conexao do cliente...");
+			while (true) {
+				Socket usuario = servidor.accept();
+				Servidor tratamento = new Servidor(usuario);
+				Thread t = new Thread(tratamento);
+				t.start();
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String args[]) {
@@ -91,13 +130,17 @@ public class ConexaoTela extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ConexaoTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		}
 
 		java.awt.EventQueue.invokeLater(new Runnable() {

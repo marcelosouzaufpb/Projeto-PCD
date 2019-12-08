@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 
 
-public class Servidor implements Runnable {
+public class Servidor extends Thread {
 	public Socket usuario;
 	private DataOutputStream out = null;
 	private DataInputStream in = null;
@@ -20,36 +20,6 @@ public class Servidor implements Runnable {
 		this.usuario = usuario;
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		// Cria um socket na porta 12345
-		ServerSocket servidor = new ServerSocket(12345);
-		System.out.println("Porta 12345 aberta!");
-
-		// Aguarda algu�m se conectar. A execu��o do servidor
-		// fica bloqueada na chamada do m�todo accept da classe
-		// ServerSocket. Quando algu�m se conectar ao servidor, o
-		// m�todo desbloqueia e retorna com um objeto da classe
-		// Socket, que � uma porta da comunica��o.
-		System.out.println("Aguardando conex�o do cliente...");
-
-		while (true) {
-			Socket usuario = servidor.accept();
-			// Cria uma thread do servidor para tratar a conex�o
-			Servidor tratamento = new Servidor(usuario);
-			Thread t = new Thread(tratamento);
-			// Inicia a thread para o cliente conectado
-			t.start();
-			cont++;
-			System.out.println(cont);
-		}
-	}
-
-	/*
-	 * A classe Thread, que foi instancia no servidor, implementa Runnable. Ent�o
-	 * voc� ter� que implementar sua l�gica de troca de mensagens dentro deste
-	 * m�todo 'run'.
-	 */
 	public void run() {
 		try {
 			out = new DataOutputStream(usuario.getOutputStream());

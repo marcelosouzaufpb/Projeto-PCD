@@ -1,5 +1,11 @@
 package Telas;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import Sistema.Servidor;
+
 public class ServidorTela extends javax.swing.JFrame {
 
 	public ServidorTela() {
@@ -58,13 +64,17 @@ public class ServidorTela extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(ServidorTela.class.getName()).log(java.util.logging.Level.SEVERE, null,
+					ex);
 		}
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
