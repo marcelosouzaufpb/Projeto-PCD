@@ -49,7 +49,7 @@ public class FindImage {
 					} else {
 						k++;
 					}
-					//testandobranch
+					
 				}
 			}
 
@@ -138,5 +138,7 @@ public class FindImage {
 				b2.getHeight() / 2.0);
 		return new AffineTransformOp(fix, AffineTransformOp.TYPE_BILINEAR).filter(b2, null);
 	}
+
+	
 
 }

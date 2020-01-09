@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 public class UsuarioConexao extends javax.swing.JFrame {
 	private static File caminhoDaPasta;
 	private static File caminhoDoLogo;
-	private String caminhoImagensModificadas = "C:/Users/marce/git/Projeto-PCD/src/img/modified/";
+	private String caminhoImagensModificadas = "/Users/ivocosta/git/Projeto-PCD/img/modificadas/";
 	private static double angulo = 0;
 	private static DefaultListModel<String> listaImagensModificadas = new DefaultListModel<String>();
 	private static DefaultListModel<String> listaOpcoesProcura = new DefaultListModel<String>();
@@ -449,7 +449,9 @@ public class UsuarioConexao extends javax.swing.JFrame {
 		findCaminhoImagem();
 	}// GEN-LAST:event_btnImagemUsuarioConexaoActionPerformed
 
-	private void btnProcurarUsuarioConexaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnProcurarUsuarioConexaoActionPerformed
+	private void btnProcurarUsuarioConexaoActionPerformed(java.awt.event.ActionEvent evt) {
+		// GEN-FIRST:event_btnProcurarUsuarioConexaoActionPerformed
+		
 		if (inputImageUsuarioConexao.getText().equals("") && inputImageUsuarioConexao.getText().endsWith("")) {
 			JOptionPane.showMessageDialog(this, "Preencha os Campos!");
 
