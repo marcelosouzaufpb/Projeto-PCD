@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Conexao {
+	// Essa classe ainda esta em andamento
 	private static final int PORT = 123;
 	private JFrame frame = new JFrame();
 	private JButton send = new JButton("Send");

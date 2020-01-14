@@ -4,19 +4,28 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Verificacao extends Thread {
+	/*
+	 * Verificacao e a classe Tread da aplicacao ela tem como paramentro o canal o
+	 * nome do usuarios e ela se comunica com a classe controle que controla as
+	 * entradas e saidas dos usuarios.
+	 */
+
 	private Controle usuariosOnline;
 	private ObjectOutputStream saida;
 	private ObjectInputStream entrada;
 	private String nomeUsuario;
 	private Socket canal;
 
+	// Esse construtor tem como finalidade garantir que sempre tenha um canal aberto
+	// para a entrada do usuarios
 	public Verificacao(Socket canal, Controle usuario) {
 		this.usuariosOnline = usuario;
 		this.canal = canal;
-		conectarCliente(canal, usuario);
+		conectarUsuario(canal, usuario);
 	}
 
-	private void conectarCliente(Socket canal, Controle usuario) {
+	// Como proprio nome ja fala essa classe conecta um usuario ao servidor
+	private void conectarUsuario(Socket canal, Controle usuario) {
 		try {
 			this.entrada = new ObjectInputStream(canal.getInputStream());
 			this.saida = new ObjectOutputStream(canal.getOutputStream());
@@ -28,6 +37,7 @@ public class Verificacao extends Thread {
 		}
 	}
 
+	// Classe run vai inicialiazar toda a aplicacao
 	public void run() {
 		try {
 			while (true) {

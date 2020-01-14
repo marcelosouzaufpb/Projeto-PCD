@@ -1,5 +1,9 @@
 
 public class Trabalhador extends Usuario {
+	/*
+	 * Trabalhador e uma classe que é do tipo usuario ele tem como atributo o nome e
+	 * o trabalho que e a acao que ele realiza
+	 */
 	private String nome;
 	private String trabalha;
 
